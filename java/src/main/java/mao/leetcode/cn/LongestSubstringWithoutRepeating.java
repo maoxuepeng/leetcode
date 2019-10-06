@@ -29,10 +29,13 @@ class Solution {
 		int start = 0;
 		int m = 1;
 		
+		//子串m
 		while (start < n-m && m < n) {
+			//子串m包含下一个字符或子串m自身包含重复元素，则找下一个子串m
 			if (contains(chars, start, start+m, n)) {
 				start ++;
 			} else {
+				//下一个字符不被包含在子串m中，寻找子串m+1
 				m ++;
 			}
 		}
