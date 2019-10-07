@@ -1,6 +1,3 @@
-/*
- * Copyright (c) Huawei Technologies Co., Ltd. 2019-2019年10月6日. All rights reserved.
- */
 
 package mao.leetcode.cn;
 
@@ -29,6 +26,7 @@ public class MaximalRectangle {
                 return 0;
             }
             int n = matrix[0].length;
+
             for (int i = 0; i < m; i++) {
                 for (int j = 0; j < n; j++) {
                     int width = 1, height = 1;

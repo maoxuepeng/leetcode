@@ -1,17 +1,8 @@
-/*
- * Copyright (c) Huawei Technologies Co., Ltd. 2019-2019年9月27日. All rights reserved.
- */
 
 package No025.mao.oj;
 
 import java.util.Scanner;
 
-/**
- * 〈一句话功能简述〉
- * 〈功能详细描述〉
- * @author m00247266
- * @since 2019年9月27日
- */
 public class Main {
 
     public static void main(String[] args) {

@@ -1,6 +1,3 @@
-/*
- * Copyright (c) Huawei Technologies Co., Ltd. 2019-2019年9月21日. All rights reserved.
- */
 
 package No002.mao.oj;
 
