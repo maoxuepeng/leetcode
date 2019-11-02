@@ -1,5 +1,7 @@
 package mao.leetcode.cn;
 
+import datastruct.ListNode;
+
 public class MergeTwoLists {
 	public static void main(String[] args) {
 		Solution s = new MergeTwoLists().new Solution();

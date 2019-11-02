@@ -1,6 +1,8 @@
 
 package mao.leetcode.cn;
 
+import datastruct.ListNode;
+
 //https://leetcode-cn.com/problems/merge-k-sorted-lists/
 public class MergeKSortedLists {
     /**

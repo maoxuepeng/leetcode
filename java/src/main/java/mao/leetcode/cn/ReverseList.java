@@ -1,5 +1,7 @@
 package mao.leetcode.cn;
 
+import datastruct.ListNode;
+
 //https://leetcode-cn.com/problems/reverse-linked-list/
 public class ReverseList {
 	public static void main(String[] args) {
