@@ -1,35 +1,61 @@
 
 package introduction.to.algorithms;
 
-//最长单调递增子序列
+/**
+ * 长度为n的序列的最长单调递增子序列
+ * 
+ */
 public class LongestMonotonicSequence {
     public static void main(String[] args) {
-        int[] input = new int[] {1, 3, 2, 2, 3, 4, 5};
+        int[] input = new int[] {5};
         int n = input.length;
-        int[] output = new int[n];
+        int[][] output = new int[n][n];
         LongestMonotonicSequence lms = new LongestMonotonicSequence();
-        int longestSeqLen = lms.longestMonotonicSequence(input, output);
+        int[] mn = lms.longestMonotonicSequence(input, output);
+        int m = mn[0];
+        int nn = mn[1];
         System.out.print("longest monotonic sequence of ");
         for (int i : input) {
             System.out.print(i + ",");
         }
-        System.out.println(" is: ");
-        for (int i = 0; i < longestSeqLen; i++) {
-            System.out.print(output[i]);
-            System.out.print(",");
+        System.out.println(" length is: " + m + ", values are: ");
+        for (int i = 0; i < m; i++) {
+            for (int j = 0; j < nn; j++) {
+                System.out.print(output[i][j]);
+                System.out.print(",");
+            }
+            System.out.println();
         }
     }
 
-    // 返回X的所有最长单调递增序列
-    int longestMonotonicSequence(int[] X, int[] longestSeq) {
+    /**
+     * 返回X的所有最长单调递增序列
+     * @param X 序列
+     * @param longestSeq 所有最长单调递增子序列
+     * @param mn 单调子序列每一行的长度
+     * @return 单调子序列行数与列数
+     */
+    int[] longestMonotonicSequence(int[] X, int[][] longestSeq) {
         int n = X.length;
 
+        // 单调递增序列的长度
         int longestSeqLen = 0;
 
+        // 单调递增子序列数量
+        int longestSeqCount = 0;
+
+        // Xi起始的所有单调递增序列长度
+        int[] longestPis = new int[n];
+
+        // Xi起始的所有单调递增序列
         int[][] xiPossibilities = new int[n][n];
+        // Xi起始的所有单调递增序列个数
         int pb = 0;
         int pi = 0;
+
+        // xiPossibilities 中每一行的长度（单调递增序列的长度）
         int[] piLen = new int[n];
+        // xiPossibilities每一行，对应的Xm在X中的起始位置
         int[] xmPos = new int[n];
 
         for (int i = 0; i < n; i++) {
@@ -50,15 +76,24 @@ public class LongestMonotonicSequence {
             print(xiPossibilities, pb, piLen);
 
             // 此时pi为xiPossibilities的实际长度
-            int longestPi = indexOfMaxValue(piLen, pi);
-            int longestSeqXiLen = piLen[longestPi];
+            int longestSeqXiCount = indexOfMaxValue(piLen, pi, longestPis);
+            int longestSeqXiLen = piLen[longestPis[0]];
 
             if (longestSeqLen < longestSeqXiLen) {
-                copy(xiPossibilities[longestPi], longestSeq, 0, longestSeqXiLen);
+                for (int p = 0; p < longestSeqXiCount; p++) {
+                    copy(xiPossibilities[longestPis[p]], longestSeq[p], 0, longestSeqXiLen);
+                }
                 longestSeqLen = longestSeqXiLen;
+                longestSeqCount = longestSeqXiCount;
+            } else if (longestSeqLen == longestSeqXiLen) {
+                for (int p = 0; p < longestSeqXiCount; p++) {
+                    copy(xiPossibilities[longestPis[p]], longestSeq[longestSeqCount + p], 0, longestSeqXiLen);
+                }
+                longestSeqLen = longestSeqXiLen;
+                longestSeqCount += longestSeqXiCount;
             }
         }
-        return longestSeqLen;
+        return new int[] {longestSeqCount, longestSeqLen};
     }
 
     void print(int[][] a, int m, int[] n) {
@@ -75,16 +110,30 @@ public class LongestMonotonicSequence {
     /** 找长度为len的数字a中的最大值
      * @param a
      * @param len
+     * @param values
      * @return 最大值
      */
-    private int indexOfMaxValue(int[] a, int len) {
+    private int indexOfMaxValue(int[] a, int len, int[] values) {
         int maxIndex = 0;
         for (int i = 1; i < len; i++) {
             if (a[maxIndex] < a[i]) {
                 maxIndex = i;
             }
         }
-        return maxIndex;
+
+        int count = 1;
+        values[count - 1] = maxIndex;
+
+        for (int i = 0; i < len; i++) {
+            if (maxIndex == i) {
+                continue;
+            }
+            if (a[maxIndex] == a[i]) {
+                count++;
+                values[count - 1] = i;
+            }
+        }
+        return count;
     }
 
     /** 对X的两个子集：Xi, Xm，找出所有单调递增子序列。Xi为单调递增子序列，Xm为原始序列
