@@ -4,6 +4,7 @@ package introduction.to.algorithms;
 import java.util.ArrayList;
 import java.util.List;
 
+//最长子串动态规划实现
 public class LongestCommonSequence {
     public static void main(String[] args) {
         String x = "ABCBDAB";
